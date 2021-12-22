@@ -11,3 +11,5 @@ commands:
     permission: limited_utils.command.clock
   anticreep:
     permission: limited_utils.command.anticreep
+  bettersleep:
+    permission: limited_utils.command.bettersleep

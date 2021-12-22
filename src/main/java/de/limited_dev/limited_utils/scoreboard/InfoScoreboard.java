@@ -16,7 +16,7 @@ public class InfoScoreboard extends ScoreboardBuilder {
     private String timeStamp;
 
     public InfoScoreboard(Player player) {
-        super(player, ChatColor.AQUA.toString() + ChatColor.BOLD + "  " +player.getAddress().getHostName() + "  ");
+        super(player, ChatColor.AQUA.toString() + ChatColor.BOLD + "  " + player.getAddress().getHostName() + "  ");
         run();
     }
 

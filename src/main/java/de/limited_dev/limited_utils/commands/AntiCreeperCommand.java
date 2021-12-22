@@ -47,6 +47,6 @@ public class AntiCreeperCommand implements CommandExecutor {
         return false;
     }
     private void sendUsage (CommandSender sender) {
-        sender.sendMessage("§7Verwendung:§9 /anticreep enable, /anticreep disable, /anticreep toggle");
+        sender.sendMessage("§7Usage:§9 /anticreep enable, /anticreep disable, /anticreep toggle");
     }
 }

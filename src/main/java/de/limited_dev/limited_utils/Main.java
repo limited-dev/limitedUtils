@@ -1,8 +1,10 @@
 package de.limited_dev.limited_utils;
 
 import de.limited_dev.limited_utils.commands.AntiCreeperCommand;
+import de.limited_dev.limited_utils.commands.BetterSleepCommand;
 import de.limited_dev.limited_utils.commands.ClockCommand;
 import de.limited_dev.limited_utils.features.AntiCreeper;
+import de.limited_dev.limited_utils.features.BetterSleep;
 import de.limited_dev.limited_utils.features.Clock;
 import de.limited_dev.limited_utils.listeners.BedListeners;
 import de.limited_dev.limited_utils.listeners.ExplosionListener;
@@ -18,6 +20,7 @@ public final class Main extends JavaPlugin {
 
     private Clock clock;
     private AntiCreeper anticreep;
+    private BetterSleep betterslp;
 
     private Config config;
 
@@ -37,15 +40,18 @@ public final class Main extends JavaPlugin {
 
         clock = new Clock();
         anticreep = new AntiCreeper();
+        betterslp = new BetterSleep();
 
         getCommand("clock").setExecutor(new ClockCommand());
         getCommand("anticreep").setExecutor(new AntiCreeperCommand());
+        getCommand("bettersleep").setExecutor(new BetterSleepCommand());
 
         System.out.println("Loaded limited_utils");
     }
 
     @Override
     public void onDisable() {
+        betterslp.save();
         anticreep.save();
         clock.save();
         config.save();
@@ -62,6 +68,8 @@ public final class Main extends JavaPlugin {
     public AntiCreeper getAnticreep(){
         return anticreep;
     }
+
+    public BetterSleep betterslp() { return betterslp; }
 
     public Config getConfiguration() {
         return config;

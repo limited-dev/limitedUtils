@@ -46,7 +46,7 @@ public class ClockCommand implements CommandExecutor {
         return false;
     }
     private void sendUsage (CommandSender sender) {
-        sender.sendMessage("§7Verwendung:§9 /clock enable, /clock disable, /clock toggle");
+        sender.sendMessage("§7Usage:§9 /clock enable, /clock disable, /clock toggle");
     }
 }
 
