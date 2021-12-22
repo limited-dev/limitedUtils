@@ -1,0 +1,13 @@
+name: Limited_Utils
+version: '${project.version}'
+main: de.limited_dev.limited_utils.Main
+api-version: 1.18
+authors: [ limited_dev ]
+description: A utility plugin for Minecraft 1.18.1 by limited_dev
+website: limited-dev.de
+
+commands:
+  clock:
+    permission: limited_utils.command.clock
+  anticreep:
+    permission: limited_utils.command.anticreep
