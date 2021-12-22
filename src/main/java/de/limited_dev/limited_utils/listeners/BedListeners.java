@@ -12,21 +12,13 @@ public class BedListeners implements Listener {
 
     int currentlyInBed = 0;
 
-    private int minSleeping;
-
-    public int getMinSleeping() {
-        return minSleeping;
-    }
-
-    public void setMinSleeping(int minSleeping) {
-        this.minSleeping = minSleeping;
-    }
-
     @EventHandler
     public void onPlayerBedEnter(PlayerBedEnterEvent event) {
         BetterSleep betterslp = Main.getInstance().betterslp();
         currentlyInBed++;
-        if(currentlyInBed >= Bukkit.getOnlinePlayers().size() / 2 && betterslp.isActive()){
+        //Yes these "(" ")" are not needed here, but I used them for my brain to better understand whats going on.
+        if(currentlyInBed >= ((Bukkit.getOnlinePlayers().size() / 100) * betterslp.getPercentOfPlayersSleeping())
+            && betterslp.isActive()){
             //TODO: add support for multi Worlds!
             Bukkit.getWorld(event.getPlayer().getWorld().getName()).setTime(0);
         }
@@ -34,6 +26,13 @@ public class BedListeners implements Listener {
 
     @EventHandler
     public void onPlayerBedLeave(PlayerBedLeaveEvent event) {
+        BetterSleep betterslp = Main.getInstance().betterslp();
         currentlyInBed--;
+        //Yes these "(" ")" are not needed here, but I used them for my brain to better understand whats going on.
+        if(currentlyInBed >= ((Bukkit.getOnlinePlayers().size() / 100) * betterslp.getPercentOfPlayersSleeping())
+                && betterslp.isActive()){
+            //TODO: add support for multi Worlds!
+            Bukkit.getWorld(event.getPlayer().getWorld().getName()).setTime(0);
+        }
     }
 }

@@ -1,6 +1,10 @@
 package de.limited_dev.limited_utils.scoreboard;
 
 import de.limited_dev.limited_utils.Main;
+import de.limited_dev.limited_utils.commands.ClockCommand;
+import de.limited_dev.limited_utils.features.AntiCreeper;
+import de.limited_dev.limited_utils.features.BetterSleep;
+import de.limited_dev.limited_utils.features.Clock;
 import de.limited_dev.limited_utils.utils.ScoreboardBuilder;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Statistic;
@@ -12,11 +16,14 @@ import java.util.Calendar;
 
 public class InfoScoreboard extends ScoreboardBuilder {
 
-
+    private int featureid;
+    private int featureidid;
     private String timeStamp;
 
     public InfoScoreboard(Player player) {
         super(player, ChatColor.AQUA.toString() + ChatColor.BOLD + "  " + player.getAddress().getHostName() + "  ");
+        featureid = 0;
+        featureidid = 0;
         run();
     }
 
@@ -29,7 +36,12 @@ public class InfoScoreboard extends ScoreboardBuilder {
         setScore(ChatColor.WHITE + "Player: "+ ChatColor.GOLD  + player.getName(), 5);
         setScore("XYZ | " + player.getLocation().getBlockX() + " " + player.getLocation().getBlockY() + " " + player.getLocation().getBlockZ(), 4);
         setScore("Ping: " + ChatColor.GREEN + player.getPing() + ChatColor.RESET + "ms", 3);
-        setScore("Playtime: " + ChatColor.GOLD + player.getStatistic(Statistic.PLAY_ONE_MINUTE) / 20 / 60 + " min", 2);
+        long playtimeTicks = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
+        long playtimeAdditionalMinutes = ((playtimeTicks / 20) / 60) % 60;
+        setScore("Playtime: " + ChatColor.GOLD + ((playtimeTicks / 20) / 60) / 60 + "hrs " + playtimeAdditionalMinutes + "min", 2);
+        if(player.isOp()){
+            setScore("Plugin features:", 1);
+        }
         setScore(ChatColor.AQUA.toString(), 0);
     }
 
@@ -46,9 +58,51 @@ public class InfoScoreboard extends ScoreboardBuilder {
         } else if(player.getPing() >= 81){
             setScore("Ping: " + ChatColor.RED + player.getPing() + ChatColor.RESET + "ms", 3);
         }
+        long playtimeTicks = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
+        long playtimeAdditionalMinutes = ((playtimeTicks / 20) / 60) % 60;
+        setScore("Playtime: " + ChatColor.GOLD + ((playtimeTicks / 20) / 60) / 60 + "hrs " + playtimeAdditionalMinutes + "min", 2);
+        if(player.isOp())
+        {
+            AntiCreeper anticreep = Main.getInstance().getAnticreep();
+            BetterSleep betterslp = Main.getInstance().betterslp();
+            Clock clock = Main.getInstance().getClock();
+            switch (featureid){
+                case 0:
+                    if(anticreep.isActive()){
+                        setScore("AntiCreeper: " + ChatColor.GREEN +  anticreep.isActive(), 1);
+                    }else{
+                        setScore("AntiCreeper: " + ChatColor.RED +  anticreep.isActive(), 1);
+                    }
+                    break;
+                case 1:
+                    if(betterslp.isActive()){
+                        setScore("BetterSleep: " + ChatColor.GREEN + betterslp.isActive(), 1);
+                    }else{
+                        setScore("BetterSleep: " + ChatColor.RED + betterslp.isActive(), 1);
+                    }
+                    break;
+                case 2:
+                    if(clock.isRunning()){
+                        setScore("Clock: " + ChatColor.GREEN + clock.isRunning(), 1);
+                    }else{
+                        setScore("Clock: " + ChatColor.RED + clock.isRunning(), 1);
+                    }
+                    break;
+                default:
+                    setScore(ChatColor.RED + "ERROR!", 1);
+                    break;
+            }
+            if(featureid >= 2 && featureidid >= 20){
+                featureid = 0;
+                featureidid = 0;
+            }
+            if(featureidid >= 20){
+                featureid++;
+                featureidid = 0;
+            }
+            featureidid++;
 
-        setScore("Playtime: " + ChatColor.GOLD + player.getStatistic(Statistic.PLAY_ONE_MINUTE) / 20 / 60 + " min", 2);
-
+        }
     }
 
     private void run() {

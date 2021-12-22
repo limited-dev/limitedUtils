@@ -13,7 +13,7 @@ public class RndmQuitJoke {
             case 3 -> "If thats not a ragequit, I don't know. ¯\\_(ツ)_/¯";
             case 4 -> "AND NEVER COME BACK!";
             case 5 -> "I just cannot be bothered rn.";
-            case 6 -> "Like he quit smoking.";
+            case 6 -> "Like your dad left your mom.";
             case 7 -> "He finally found out that this isn't Terraria.";
             default -> "Null";
         };
