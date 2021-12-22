@@ -1,5 +1,6 @@
-package de.limited_dev.limited_utils.scoreboard;
+package de.limited_dev.limited_utils.utils;
 
+import de.limited_dev.limited_utils.scoreboard.EntryName;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;

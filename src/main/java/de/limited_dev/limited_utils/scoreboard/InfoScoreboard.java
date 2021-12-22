@@ -1,6 +1,7 @@
 package de.limited_dev.limited_utils.scoreboard;
 
 import de.limited_dev.limited_utils.Main;
+import de.limited_dev.limited_utils.utils.ScoreboardBuilder;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
@@ -9,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class InfoScoreboard extends ScoreboardBuilder{
+public class InfoScoreboard extends ScoreboardBuilder {
 
 
     private String timeStamp;
