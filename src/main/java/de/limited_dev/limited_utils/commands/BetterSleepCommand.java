@@ -1,7 +1,6 @@
 package de.limited_dev.limited_utils.commands;
 
 import de.limited_dev.limited_utils.Main;
-import de.limited_dev.limited_utils.features.AntiCreeper;
 import de.limited_dev.limited_utils.features.BetterSleep;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
@@ -12,7 +11,7 @@ public class BetterSleepCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        BetterSleep betterslp = Main.getInstance().betterslp();
+        BetterSleep betterslp = Main.getInstance().getBetterslp();
         if(args.length == 0){
             sendUsage(sender);
         }

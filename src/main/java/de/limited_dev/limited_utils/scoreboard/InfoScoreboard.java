@@ -1,7 +1,6 @@
 package de.limited_dev.limited_utils.scoreboard;
 
 import de.limited_dev.limited_utils.Main;
-import de.limited_dev.limited_utils.commands.ClockCommand;
 import de.limited_dev.limited_utils.features.AntiCreeper;
 import de.limited_dev.limited_utils.features.BetterSleep;
 import de.limited_dev.limited_utils.features.Clock;
@@ -30,26 +29,27 @@ public class InfoScoreboard extends ScoreboardBuilder {
     @Override
     public void createScoreboard() {
         timeStamp = new SimpleDateFormat("dd.MM.yyyy").format(Calendar.getInstance().getTime());
-        setScore("test", 8);
-        setScore(ChatColor.DARK_GRAY.toString(), 7);
-        setScore(ChatColor.DARK_GRAY + timeStamp, 6);
-        setScore(ChatColor.WHITE + "Player: "+ ChatColor.GOLD  + player.getName(), 5);
-        setScore("XYZ | " + player.getLocation().getBlockX() + " " + player.getLocation().getBlockY() + " " + player.getLocation().getBlockZ(), 4);
+        //setScore("", 7);
+        setScore(ChatColor.GOLD.toString(), 6);
+        //setScore(ChatColor.WHITE + "Player: "+ ChatColor.GOLD  + player.getName(), 6);
+        setScore(ChatColor.DARK_GRAY + "XYZ | " + player.getLocation().getBlockX() + " " + player.getLocation().getBlockY() + " " + player.getLocation().getBlockZ(), 5);
+        setScore(timeStamp, 4);
         setScore("Ping: " + ChatColor.GREEN + player.getPing() + ChatColor.RESET + "ms", 3);
         long playtimeTicks = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
         long playtimeAdditionalMinutes = ((playtimeTicks / 20) / 60) % 60;
         setScore("Playtime: " + ChatColor.GOLD + ((playtimeTicks / 20) / 60) / 60 + "hrs " + playtimeAdditionalMinutes + "min", 2);
         if(player.isOp()){
             setScore("Plugin features:", 1);
+            setScore(ChatColor.AQUA.toString(), 0);
+        }else{
+            setScore(ChatColor.AQUA.toString(), 1);
         }
-        setScore(ChatColor.AQUA.toString(), 0);
     }
 
     @Override
     public void update() {
-        setScore(ChatColor.DARK_GRAY + timeStamp, 6);
 
-        setScore("XYZ | " + player.getLocation().getBlockX() + " " + player.getLocation().getBlockY() + " " + player.getLocation().getBlockZ(), 4);
+        setScore(ChatColor.DARK_GRAY + "XYZ | " + player.getLocation().getBlockX() + " " + player.getLocation().getBlockY() + " " + player.getLocation().getBlockZ(), 5);
 
         if(player.getPing() < 30){
             setScore("Ping: " + ChatColor.GREEN + player.getPing() + ChatColor.RESET + "ms", 3);
@@ -64,7 +64,7 @@ public class InfoScoreboard extends ScoreboardBuilder {
         if(player.isOp())
         {
             AntiCreeper anticreep = Main.getInstance().getAnticreep();
-            BetterSleep betterslp = Main.getInstance().betterslp();
+            BetterSleep betterslp = Main.getInstance().getBetterslp();
             Clock clock = Main.getInstance().getClock();
             switch (featureid){
                 case 0:

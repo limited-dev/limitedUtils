@@ -1,7 +1,7 @@
 package de.limited_dev.limited_utils.listeners;
 
 import de.limited_dev.limited_utils.scoreboard.InfoScoreboard;
-import de.limited_dev.limited_utils.utils.JokeHandler.JokeHandler;
+import de.limited_dev.limited_utils.utils.JokeHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

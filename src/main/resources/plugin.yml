@@ -13,3 +13,5 @@ commands:
     permission: limited_utils.command.anticreep
   bettersleep:
     permission: limited_utils.command.bettersleep
+  custommotd:
+    permission: limited_utils.command.custommotd
