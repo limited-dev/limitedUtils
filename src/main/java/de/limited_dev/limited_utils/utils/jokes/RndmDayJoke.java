@@ -1,4 +1,4 @@
-package de.limited_dev.limited_utils.utils.Jokes;
+package de.limited_dev.limited_utils.utils.jokes;
 
 import de.limited_dev.limited_utils.utils.Get;
 

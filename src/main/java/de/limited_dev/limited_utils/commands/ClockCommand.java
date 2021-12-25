@@ -13,6 +13,7 @@ public class ClockCommand implements CommandExecutor {
         Clock clock = Main.getInstance().getClock();
         if(args.length == 0){
             sendUsage(sender);
+            return true;
         }
         switch(args[0].toLowerCase()){
             case "enable":

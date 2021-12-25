@@ -13,6 +13,7 @@ public class CustomMOTDCommand implements CommandExecutor {
         CustomMOTD cMotd = Main.getInstance().getCMotd();
         if(args.length == 0){
             sendUsage(sender);
+            return true;
         }
         switch(args[0].toLowerCase()){
             case "enable":
@@ -85,6 +86,6 @@ public class CustomMOTDCommand implements CommandExecutor {
         return false;
     }
     private void sendUsage (CommandSender sender) {
-        sender.sendMessage("§7Usage:§9 /customMotd enable, /customMotd disable, /customMotd toggle, /customMotd setLine1 <Line 1>, /customMotd setLine2 <Line 2>, /customMotd reset");
+        sender.sendMessage("§7Usage:§9 /custommotd enable, /custommotd disable, /custommotd toggle, /custommotd setLine1 <Line 1>, /custommotd setLine2 <Line 2>, /custommotd reset");
     }
 }

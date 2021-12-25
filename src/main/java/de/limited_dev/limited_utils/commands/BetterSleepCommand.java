@@ -14,6 +14,7 @@ public class BetterSleepCommand implements CommandExecutor {
         BetterSleep betterslp = Main.getInstance().getBetterslp();
         if(args.length == 0){
             sendUsage(sender);
+            return true;
         }
         switch(args[0].toLowerCase()){
             case "enable":

@@ -14,6 +14,7 @@ public class AntiCreeperCommand implements CommandExecutor {
         AntiCreeper anticreep = Main.getInstance().getAnticreep();
         if(args.length == 0){
             sendUsage(sender);
+            return true;
         }
         switch(args[0].toLowerCase()){
             case "enable":

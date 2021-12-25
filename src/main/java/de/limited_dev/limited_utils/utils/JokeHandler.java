@@ -1,9 +1,9 @@
 package de.limited_dev.limited_utils.utils;
 
-import de.limited_dev.limited_utils.utils.Jokes.RndmDayJoke;
-import de.limited_dev.limited_utils.utils.Jokes.RndmDeathJoke;
-import de.limited_dev.limited_utils.utils.Jokes.RndmJoinJoke;
-import de.limited_dev.limited_utils.utils.Jokes.RndmQuitJoke;
+import de.limited_dev.limited_utils.utils.jokes.RndmDayJoke;
+import de.limited_dev.limited_utils.utils.jokes.RndmDeathJoke;
+import de.limited_dev.limited_utils.utils.jokes.RndmJoinJoke;
+import de.limited_dev.limited_utils.utils.jokes.RndmQuitJoke;
 
 public class JokeHandler {
     public static String getJoke(String Type){
