@@ -37,6 +37,7 @@ public class BedListeners implements Listener {
                         Bukkit.getWorld(event.getPlayer().getWorld().getName()).setTime(0);
                         Bukkit.broadcastMessage(ChatColor.GOLD + JokeHandler.getJoke("Day"));
                     }
+                    currentlyInBed = 0;
                 }
             }.runTaskLater(Main.getInstance(), 20 * 5);
         }

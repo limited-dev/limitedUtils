@@ -1,6 +1,5 @@
 package de.limited_dev.limited_utils.utils;
 
-import de.limited_dev.limited_utils.Main;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;

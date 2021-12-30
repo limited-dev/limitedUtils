@@ -1,21 +1,17 @@
 package de.limited_dev.limited_utils;
 
-import de.limited_dev.limited_utils.commands.AntiCreeperCommand;
-import de.limited_dev.limited_utils.commands.BetterSleepCommand;
-import de.limited_dev.limited_utils.commands.ClockCommand;
-import de.limited_dev.limited_utils.commands.CustomMOTDCommand;
-import de.limited_dev.limited_utils.features.AntiCreeper;
-import de.limited_dev.limited_utils.features.BetterSleep;
-import de.limited_dev.limited_utils.features.Clock;
-import de.limited_dev.limited_utils.features.CustomMOTD;
-import de.limited_dev.limited_utils.listeners.BedListeners;
-import de.limited_dev.limited_utils.listeners.ExplosionListener;
-import de.limited_dev.limited_utils.listeners.PlayerListeners;
-import de.limited_dev.limited_utils.listeners.ServerListeners;
+import de.limited_dev.limited_utils.commands.*;
+import de.limited_dev.limited_utils.features.*;
+import de.limited_dev.limited_utils.listeners.*;
+import de.limited_dev.limited_utils.utils.ClanFiles;
 import de.limited_dev.limited_utils.utils.Config;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
+
+import java.io.File;
 
 public final class Main extends JavaPlugin {
 
@@ -26,11 +22,22 @@ public final class Main extends JavaPlugin {
     private BetterSleep betterslp;
     private CustomMOTD cMotd;
 
+    private ClanFiles clanfiles;
     private Config config;
+
+    public Main(){
+        super();
+    }
+
+    protected Main(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file){
+        super(loader, description, dataFolder, file);
+    }
 
     @Override
     public void onLoad() {
         instance = this;
+
+        clanfiles = new ClanFiles();
         config = new Config();
     }
 
@@ -42,6 +49,7 @@ public final class Main extends JavaPlugin {
         mgr.registerEvents(new ExplosionListener(), this);
         mgr.registerEvents(new BedListeners(), this);
         mgr.registerEvents(new ServerListeners(), this);
+        mgr.registerEvents(new ChatListener(), this);
 
         clock = new Clock();
         anticreep = new AntiCreeper();
@@ -52,6 +60,10 @@ public final class Main extends JavaPlugin {
         getCommand("anticreep").setExecutor(new AntiCreeperCommand());
         getCommand("bettersleep").setExecutor(new BetterSleepCommand());
         getCommand("custommotd").setExecutor(new CustomMOTDCommand());
+        getCommand("clan").setExecutor(new ClanCommand());
+
+        ClanFiles.base();
+        Clans.loadClans();
 
         System.out.println("Loaded limited_utils");
     }
@@ -62,6 +74,8 @@ public final class Main extends JavaPlugin {
         betterslp.save();
         anticreep.save();
         clock.save();
+
+        Clans.saveClans();
         config.save();
     }
 
@@ -84,4 +98,6 @@ public final class Main extends JavaPlugin {
     public Config getConfiguration() {
         return config;
     }
+
+    public ClanFiles getClanfiles() {return clanfiles;}
 }

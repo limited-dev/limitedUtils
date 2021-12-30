@@ -4,7 +4,7 @@ import de.limited_dev.limited_utils.utils.Get;
 
 public class RndmQuitJoke {
     public static String getRndmJoke(){
-        return getJoke(Get.RndmNum(1 , 6));
+        return getJoke(Get.RndmNum(1 , 9));
     }
     public static String getJoke(int rndmNum){
         return switch (rndmNum) {
@@ -15,6 +15,8 @@ public class RndmQuitJoke {
             case 5 -> "I just cannot be bothered rn.";
             case 6 -> "Like your dad left your mom.";
             case 7 -> "He finally found out that this isn't Terraria.";
+            case 8 -> "Sleep is now an option.";
+            case 9 -> "You can eat again";
             default -> "Null";
         };
     }
