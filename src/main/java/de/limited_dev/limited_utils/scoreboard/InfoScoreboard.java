@@ -3,8 +3,8 @@ package de.limited_dev.limited_utils.scoreboard;
 import de.limited_dev.limited_utils.Main;
 import de.limited_dev.limited_utils.features.AntiCreeper;
 import de.limited_dev.limited_utils.features.BetterSleep;
+import de.limited_dev.limited_utils.features.Clans;
 import de.limited_dev.limited_utils.features.Clock;
-import de.limited_dev.limited_utils.utils.ScoreboardBuilder;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
@@ -20,7 +20,8 @@ public class InfoScoreboard extends ScoreboardBuilder {
     private String timeStamp;
 
     public InfoScoreboard(Player player) {
-        super(player, ChatColor.AQUA.toString() + ChatColor.BOLD + "  " + player.getAddress().getHostName() + "  ");
+        super(player, ChatColor.AQUA.toString() + "  " + player.getName() + "  ");
+        //super(player, ChatColor.AQUA.toString() + ChatColor.BOLD + "  " + player.getAddress().getHostName() + "  ");
         featureid = 0;
         featureidid = 0;
         run();
@@ -29,11 +30,15 @@ public class InfoScoreboard extends ScoreboardBuilder {
     @Override
     public void createScoreboard() {
         timeStamp = new SimpleDateFormat("dd.MM.yyyy").format(Calendar.getInstance().getTime());
-        //setScore("", 7);
-        setScore(ChatColor.GOLD.toString(), 6);
+        setScore(timeStamp, 7);
+        setScore(ChatColor.DARK_GRAY + "XYZ | " + player.getLocation().getBlockX() + " " + player.getLocation().getBlockY() + " " + player.getLocation().getBlockZ(), 6);
+        setScore(ChatColor.GOLD.toString(), 5);
         //setScore(ChatColor.WHITE + "Player: "+ ChatColor.GOLD  + player.getName(), 6);
-        setScore(ChatColor.DARK_GRAY + "XYZ | " + player.getLocation().getBlockX() + " " + player.getLocation().getBlockY() + " " + player.getLocation().getBlockZ(), 5);
-        setScore(timeStamp, 4);
+        if(Clans.hasClan(player)){
+            setScore("Clan: " + ChatColor.GOLD + Clans.getClan(player), 4);
+        }else{
+            setScore("Clan: " + ChatColor.GOLD + "None.", 4);
+        }
         setScore("Ping: " + ChatColor.GREEN + player.getPing() + ChatColor.RESET + "ms", 3);
         long playtimeTicks = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
         long playtimeAdditionalMinutes = ((playtimeTicks / 20) / 60) % 60;
@@ -49,7 +54,13 @@ public class InfoScoreboard extends ScoreboardBuilder {
     @Override
     public void update() {
 
-        setScore(ChatColor.DARK_GRAY + "XYZ | " + player.getLocation().getBlockX() + " " + player.getLocation().getBlockY() + " " + player.getLocation().getBlockZ(), 5);
+        setScore(ChatColor.DARK_GRAY + "XYZ | " + player.getLocation().getBlockX() + " " + player.getLocation().getBlockY() + " " + player.getLocation().getBlockZ(), 6);
+
+        if(Clans.hasClan(player)){
+            setScore("Clan: " + ChatColor.GOLD + Clans.getClan(player), 4);
+        }else{
+            setScore("Clan: " + ChatColor.GOLD + "None.", 4);
+        }
 
         if(player.getPing() < 30){
             setScore("Ping: " + ChatColor.GREEN + player.getPing() + ChatColor.RESET + "ms", 3);

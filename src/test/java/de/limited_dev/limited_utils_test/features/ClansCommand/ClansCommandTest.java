@@ -1,19 +1,18 @@
 package de.limited_dev.limited_utils_test.features.ClansCommand;
-/*
+
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.MockPlugin;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import de.limited_dev.limited_utils.Main;
-import de.limited_dev.limited_utils.commands.ClanCommand;
 import org.bukkit.Bukkit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-*/
+
 public class ClansCommandTest {
 
-    /* private ServerMock server;
+    private ServerMock server;
     private Main plugin;
     private MockPlugin mockPlugin;
     private PlayerMock mockPlayer;
@@ -21,7 +20,7 @@ public class ClansCommandTest {
     @Before
     public void setUp()
     {
-        System.out.println("Start.\nSet server");
+        System.out.println("Start setUp.\nSet server");
         server = MockBukkit.mock();
         System.out.println("Set plugin");
         plugin = (Main) MockBukkit.load(Main.class);
@@ -34,20 +33,18 @@ public class ClansCommandTest {
 
     @Test
     public void TestClanCommands(){
-        System.out.println("Running Test Block\nTesting Clan info");
-        server.dispatchCommand(mockPlayer, "/Clan info");
+        System.out.println("Start Test Block\nTesting Clan info");
+        System.out.println("End Test Block");
     }
 
 
     @After
     public void tearDown()
     {
-        System.out.println("Start.\nRun cancelTasks");
+        System.out.println("Start tearDown.\nRun cancelTasks");
         Bukkit.getScheduler().cancelTasks(plugin);
         System.out.println("Run unmock");
         MockBukkit.unmock();
-        System.out.println("Done.");
+        System.out.println("Done.\nEnd Test.");
     }
-    *
-    * */
 }

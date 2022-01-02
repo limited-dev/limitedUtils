@@ -1,4 +1,4 @@
-package de.limited_dev.limited_utils.utils;
+package de.limited_dev.limited_utils.scoreboard;
 
 import de.limited_dev.limited_utils.scoreboard.EntryName;
 import org.bukkit.Bukkit;

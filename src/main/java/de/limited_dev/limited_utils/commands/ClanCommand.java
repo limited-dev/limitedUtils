@@ -3,10 +3,15 @@ package de.limited_dev.limited_utils.commands;
 import de.limited_dev.limited_utils.Main;
 import de.limited_dev.limited_utils.features.Clans;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.network.chat.IChatBaseComponent;
+import net.minecraft.network.protocol.game.PacketPlayOutChat;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -27,7 +32,12 @@ public class ClanCommand implements CommandExecutor {
         switch(args[0].toLowerCase()){
             case "accept": //command arg0 arg1
                 String ClanName = "";
-                if(args[1] == null){
+                if(!(args.length >= 2)){
+                    player.sendMessage(ChatColor.RED + "Wrong arguments.");
+                    return false;
+                }
+                if(Clans.hasClan(player)){
+                    player.sendMessage(ChatColor.RED + "You are already in a clan.");
                     return false;
                 }
                 for(int i = 1; i <= args.length - 1; i++){
@@ -45,7 +55,12 @@ public class ClanCommand implements CommandExecutor {
             case "ew":
             case "decline":
                 String ClanName2 = "";
-                if(args[1] == null){
+                if(!(args.length >= 2)){
+                    player.sendMessage(ChatColor.RED + "Wrong arguments.");
+                    return false;
+                }
+                if(!Clans.hasClan(player)){
+                    player.sendMessage(ChatColor.RED + "You are not in a clan.");
                     return false;
                 }
                 for(int i = 1; i <= args.length - 1; i++){
@@ -62,7 +77,8 @@ public class ClanCommand implements CommandExecutor {
                 break;
             case "create":
                 String ClanName3 = "";
-                if(args[1] == null){
+                if(!(args.length >= 2)){
+                    player.sendMessage(ChatColor.RED + "Wrong arguments.");
                     return false;
                 }
                 for(int i = 1; i <= args.length - 1; i++){
@@ -88,6 +104,14 @@ public class ClanCommand implements CommandExecutor {
                 break;
             case "kick":
             case "yeet":
+                if(!(args.length >= 2)){
+                    player.sendMessage(ChatColor.RED + "Wrong arguments.");
+                    return false;
+                }
+                if(!Clans.hasClan(player)){
+                    player.sendMessage(ChatColor.RED + "You are not in a clan.");
+                    return false;
+                }
                 String clan = Clans.getClan(player);
                 String kickedPlayerName = args[1];
                 UUID kickedPlayerUUID = Bukkit.getPlayer(kickedPlayerName).getUniqueId();
@@ -98,6 +122,14 @@ public class ClanCommand implements CommandExecutor {
                 Clans.kick(player, Bukkit.getPlayer(args[1]), Clans.getClan(player));
                 break;
             case "promote":
+                if(!(args.length >= 2)){
+                    player.sendMessage(ChatColor.RED + "Wrong arguments.");
+                    return false;
+                }
+                if(!Clans.hasClan(player)){
+                    player.sendMessage(ChatColor.RED + "You are not in a clan.");
+                    return false;
+                }
                 clan = Clans.getClan(player);
                 String promotedPlayerName = args[1];
                 UUID promotedPlayerUUID = Bukkit.getPlayer(promotedPlayerName).getUniqueId();
@@ -112,6 +144,14 @@ public class ClanCommand implements CommandExecutor {
                 Clans.promote(Bukkit.getPlayer(promotedPlayerUUID), Clans.getClan(player));
                 break;
             case "demote":
+                if(!(args.length >= 2)){
+                    player.sendMessage(ChatColor.RED + "Wrong arguments.");
+                    return false;
+                }
+                if(!Clans.hasClan(player)){
+                    player.sendMessage(ChatColor.RED + "You are not in a clan.");
+                    return false;
+                }
                 clan = Clans.getClan(player);
                 String demotedPlayerName = args[1];
                 UUID demotedPlayerUUID = Bukkit.getPlayer(demotedPlayerName).getUniqueId();
@@ -134,6 +174,10 @@ public class ClanCommand implements CommandExecutor {
                 Clans.leaveClan(player, Clans.getClan(player));
                 break;
             case "invite":
+                if(!(args.length == 2)){
+                    player.sendMessage(ChatColor.RED + "Wrong arguments.");
+                    return false;
+                }
                 if(!Clans.hasClan(player)){
                     player.sendMessage(ChatColor.RED + "You are not in a clan.");
                     return false;
@@ -142,7 +186,7 @@ public class ClanCommand implements CommandExecutor {
                 clan = Clans.getClan(player);
                 Player invitedPlayer= Bukkit.getPlayer(invitedPlayerName);
                 if(!onlinePlayers.contains(invitedPlayer)){
-                    player.sendMessage("The user " + invitedPlayerName + " isn't online right now. Please try again later");
+                    player.sendMessage(ChatColor.RED + "The user " + invitedPlayerName + " isn't online right now. Please try again later");
                     return false;
                 }
                 if(Clans.hasClan(invitedPlayer)){
@@ -155,9 +199,8 @@ public class ClanCommand implements CommandExecutor {
                 }
                 player.sendMessage(ChatColor.GOLD + "You invited " + invitedPlayerName + " to your clan.");
                 Clans.invites.put(invitedPlayer, clan);
-                invitedPlayer.sendMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "You have been invited to " + clan +
-                        "\n type '/clan accept " + clan + "' to accept\n" +
-                        "or use '/clan decline " + clan + "' to decline");
+                invitedPlayer.sendMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "You have been invited to " + clan);
+                sendRequest(invitedPlayer, clan);
                 new BukkitRunnable(){
                     @Override
                     public void run(){
@@ -195,6 +238,15 @@ public class ClanCommand implements CommandExecutor {
     }
 
     private void sendUsage (CommandSender sender) {
+        //TODO: Improve usage
         sender.sendMessage("§7Usage:§9 /clan accept <Clan>, /clan decline <Clan>, /clan create <Clan name>, /clan delete, /clan invite <Player>");
+    }
+    public void sendRequest(Player player, String clan) {
+        TextComponent messageYes = new TextComponent(ChatColor.GREEN + "[ACCEPT]");
+        messageYes.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/clan accept " + clan));
+        TextComponent messageNo = new TextComponent(ChatColor.RED + "[DECLINE]");
+        messageNo.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/clan decline " + clan));
+        player.spigot().sendMessage(messageYes);
+        player.spigot().sendMessage(messageNo);
     }
 }

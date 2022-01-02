@@ -1,7 +1,9 @@
 package de.limited_dev.limited_utils.listeners;
 
-import de.limited_dev.limited_utils.scoreboard.InfoScoreboard;
+import de.limited_dev.limited_utils.Main;
 import de.limited_dev.limited_utils.utils.JokeHandler;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -21,9 +23,11 @@ public class PlayerListeners implements Listener {
         event.setJoinMessage(ChatColor.GREEN.toString() + ChatColor.UNDERLINE + "--> " +  player.getName() + " joined the game.");
         player.sendMessage(ChatColor.GOLD + "Welcome to the Server, " + player.getName() + "!");
         Bukkit.broadcastMessage(JokeHandler.getJoke("Join"));
-        new InfoScoreboard(player);
-
+        //new InfoScoreboard(player);
+        Main.getInstance().getTablistmgr().setPlayerList(player);
+        Main.getInstance().getTablistmgr().setPlayerTeams(player);
     }
+
 
     //When a player leaves
     @EventHandler

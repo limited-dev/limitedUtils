@@ -226,6 +226,7 @@ public class Clans {
             List<UUID> cMembers = getMembers(c);
             cMembers.add(u);
             members.put(c, cMembers);
+
             p.sendMessage(ChatColor.GOLD + "^ You have been promoted!");
         }
     }

@@ -5,6 +5,8 @@ import de.limited_dev.limited_utils.features.*;
 import de.limited_dev.limited_utils.listeners.*;
 import de.limited_dev.limited_utils.utils.ClanFiles;
 import de.limited_dev.limited_utils.utils.Config;
+import de.limited_dev.limited_utils.tablist.TablistManager;
+import de.limited_dev.limited_utils.utils.TablistUpdater;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -21,6 +23,9 @@ public final class Main extends JavaPlugin {
     private AntiCreeper anticreep;
     private BetterSleep betterslp;
     private CustomMOTD cMotd;
+
+    private TablistManager tablistmgr;
+    private TablistUpdater tablistupdtr;
 
     private ClanFiles clanfiles;
     private Config config;
@@ -56,6 +61,9 @@ public final class Main extends JavaPlugin {
         betterslp = new BetterSleep();
         cMotd = new CustomMOTD();
 
+        tablistmgr = new TablistManager();
+        tablistupdtr = new TablistUpdater();
+
         getCommand("clock").setExecutor(new ClockCommand());
         getCommand("anticreep").setExecutor(new AntiCreeperCommand());
         getCommand("bettersleep").setExecutor(new BetterSleepCommand());
@@ -64,6 +72,8 @@ public final class Main extends JavaPlugin {
 
         ClanFiles.base();
         Clans.loadClans();
+
+        tablistupdtr.startRunUpdate();
 
         System.out.println("Loaded limited_utils");
     }
@@ -100,4 +110,12 @@ public final class Main extends JavaPlugin {
     }
 
     public ClanFiles getClanfiles() {return clanfiles;}
+
+    public TablistManager getTablistmgr() {
+        return tablistmgr;
+    }
+
+    public TablistUpdater getTablistupdtr() {
+        return tablistupdtr;
+    }
 }
